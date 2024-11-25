@@ -8,47 +8,60 @@ from Joystick import Joystick
 
 def main():
     joystick = Joystick()
-    my_image = Image.new("RGB", (joystick.width, joystick.height))
-    my_draw = ImageDraw.Draw(my_image)
-    my_draw.rectangle((0, 0, joystick.width, joystick.height), fill=(255, 0, 0, 100))
-    joystick.disp.image(my_image)
+    screen = Image.new("RGBA", (joystick.width, joystick.height))
+    draw = ImageDraw.Draw(screen)
 
-    cat = Cat(joystick.width, joystick.height)
+    joystick.disp.image(screen)
+
+    with open('user.txt', 'r', encoding = 'utf-8') as car:
+        car = car.readline()[:-1]
+
+    cat = Cat(joystick.width, joystick.height, car)
     obs1 = Obstacle(joystick.width, joystick.height)
     obs2 = Obstacle(joystick.width, joystick.height)
 
-    my_draw.rectangle((0, 0, joystick.width, joystick.height), fill = (255, 255, 255, 100))
+    #put title display
 
     while True:
-        command = None
-        if not joystick.button_U.value:  # up pressed
-            command = 'up_pressed'
+        #show menu
+        if not joystick.button_A.value:
+                break
 
-        elif not joystick.button_D.value:  # down pressed
-            command = 'down_pressed'
+        while True:
 
-        #elif not joystick.button_L.value:  # left pressed
-        #    command = 'left_pressed'
-
-        #elif not joystick.button_R.value:  # right pressed
-        #    command = 'right_pressed'
-            
-        else:
             command = None
+            if not joystick.button_U.value:  # up pressed
+                command = 'up_pressed'
 
-        cat.move(command)
-        obs1.move()
-        obs2.move()
+            elif not joystick.button_D.value:  # down pressed
+                command = 'down_pressed'
+
+            #elif not joystick.button_L.value:  # left pressed
+            #    command = 'left_pressed'
+
+            #elif not joystick.button_R.value:  # right pressed
+            #    command = 'right_pressed'
+            
+            else:
+                command = None
+
+            cat.move(command)
+            obs1.move()
+            obs2.move()
 
 
-        my_draw.rectangle((0, 0, joystick.width, joystick.height), fill = (255, 255, 255, 100))
-        my_draw.rectangle((tuple(obs1.position)), fill = (0, 255, 0))
-        my_draw.rectangle((tuple(obs2.position)), fill = (0, 255, 0))
-        my_draw.ellipse(tuple(cat.position), outline = cat.outline, fill = (0, 0, 0))
+            draw.rectangle((0, 0, joystick.width, joystick.height), fill = (255, 255, 255, 100))
+            draw.rectangle((tuple(obs1.position)), fill = (0, 255, 0))
+
+        
+            screen.paste(cat.image, (tuple(cat.position)), mask=cat.image)
 
         
         
-        joystick.disp.image(my_image)
+            joystick.disp.image(screen)
+        
+            if not joystick.button_A.value:
+                break
 
 
 
