@@ -8,13 +8,6 @@ from Background import Background
 
 ROCK = (42, 30)
 
-def front(cat, obs, screen):
-    if cat.position[3] >= obs.position[1] + ROCK[1]:
-        screen.paste(obs.image, (tuple(obs.position)), mask=obs.image)
-        screen.paste(cat.image, (tuple(cat.position)), mask=cat.image)
-    else: 
-        screen.paste(cat.image, (tuple(cat.position)), mask=cat.image)
-        screen.paste(obs.image, (tuple(obs.position)), mask=obs.image)
 
 def collide(cat, obs, draw):
     if cat.status == 'normal':
