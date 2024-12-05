@@ -13,13 +13,15 @@ class Obstacle:
         self.position = np.array([width, self.y], dtype = int)
         Obstacle.list.remove(self.y)
 
+    def reset(self):
+        Obstacle.list.append(self.y)
+        self.y = random.choice(Obstacle.list)
+        Obstacle.list.remove(self.y)
+        self.position[0] = self.width
+        self.position[1] = self.y
 
     def move(self):
         if self.state:
-            self.position[0] -= 3
+            self.position[0] -= 5
             if self.position[0] < -50:
-                Obstacle.list.append(self.y)
-                self.y = random.choice(Obstacle.list)
-                Obstacle.list.remove(self.y)
-                self.position[0] = self.width
-                self.position[1] = self.y
+                self.reset()

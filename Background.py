@@ -10,6 +10,6 @@ class Background:
         self.position = np.array([position, 0], dtype = int)
     
     def move(self):
-        self.position[0] -= 3
+        self.position[0] -= 5
         if self.position[0] == -240:
             self.position[0] = 240
