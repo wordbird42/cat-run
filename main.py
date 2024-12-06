@@ -12,7 +12,7 @@ ROCK = (42, 30)
 def collide(cat, obs, draw):
     if cat.status == 'normal':
         if cat.position[2] - 10 >= obs.position[0] and cat.position[0] + 10 <= obs.position[0] + ROCK[0]:
-            if cat.position[3] > obs.position[1] + 10 and cat.position[3] < obs.position[1] + 40:
+            if cat.position[3] > obs.position[1] + 7 and cat.position[3] < obs.position[1] + 40:
                 draw.line([(0, 0), (240, 0)], fill = (255, 0, 0, 255), width = 2)
                 draw.line([(0, 239), (240, 239)], fill = (255, 0, 0, 255), width = 2)
                 cat.status = 'immune'
@@ -172,6 +172,7 @@ def main():
                             scores = [int(i) for i in scores]
                             scores.append(t)
                             scores.sort()
+                            scores.reverse()
                         with open('scores.txt', 'w') as file:
                             for i in scores:
                                 file.write(str(i) + '\n')
